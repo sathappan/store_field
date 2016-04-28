@@ -7,11 +7,11 @@ module StoreField
 
   module ClassMethods
     def store_field(key, options = {})
-      raise ArgumentError, ':in is invalid'     if options[:in] and serialized_attributes[options[:in].to_s].nil?
+      raise ArgumentError, ':in is invalid'     if options[:in].blank?
       raise ArgumentError, ':type is invalid'   if options[:type] and ![ Hash, Set ].include?(options[:type])
 
       klass = options[:type] || Hash
-      store_attribute = options[:in] || serialized_attributes.keys.first
+      store_attribute = options[:in]
       raise ScriptError, 'store method must be defined before store_field' if store_attribute.nil?
 
       # Accessor
